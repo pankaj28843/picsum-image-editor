@@ -8,7 +8,8 @@ import {
   SizeInput,
 } from '@picsum-image-editor/components';
 
-import { usePicsumImageFilters } from '../hooks';
+import { ImagePreview } from '../components/ImagePreview';
+import { getPicsumImageUrl, usePicsumImage } from '../hooks';
 
 export const EditorPage = () => {
   const [blur, setBlur] = useState(0);
@@ -17,12 +18,6 @@ export const EditorPage = () => {
   const [imageId, _setImageId] = useState(
     Math.floor(1 + 1000 * Math.random()).toString()
   );
-  const imageUrl = usePicsumImageFilters(imageId, {
-    width,
-    height,
-    blur,
-    grayscale,
-  });
 
   return (
     <Container
@@ -36,6 +31,7 @@ export const EditorPage = () => {
       <Box
         sx={{
           maxWidth: '600px',
+          height: 'fit-content',
         }}
       >
         <BlurInput min={0} max={10} initialValue={blur} onChange={setBlur} />
@@ -50,15 +46,10 @@ export const EditorPage = () => {
       <Box
         sx={{
           flexGrow: 1,
-          overflow: 'auto',
+          overflow: 'hidden',
         }}
       >
-        <ImageTile
-          src={imageUrl}
-          width={width}
-          height={height}
-          author="Picsum"
-        />
+        <ImagePreview {...{ id: imageId, width, height, blur, grayscale }} />
       </Box>
     </Container>
   );

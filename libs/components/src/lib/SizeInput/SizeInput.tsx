@@ -16,7 +16,8 @@ export type SizeInputProps = {
   onChange: (value: { width: number; height: number }) => void;
 };
 
-const isValidNumber = (value: number) => !isNaN(value) && value >= 1;
+const isValidImageDimension = (value: number) =>
+  !isNaN(value) && value >= 1 && value <= 5000;
 
 export const SizeInput = ({ initialValue, onChange }: SizeInputProps) => {
   const debouncedOnChange = useMemo(() => debounce(onChange, 500), [onChange]);
@@ -29,7 +30,7 @@ export const SizeInput = ({ initialValue, onChange }: SizeInputProps) => {
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const onWidthChange = debounce((value: number) => {
-    if (!isValidNumber(value)) {
+    if (!isValidImageDimension(value)) {
       return;
     }
     if (keepAspectRatio) {
@@ -39,7 +40,7 @@ export const SizeInput = ({ initialValue, onChange }: SizeInputProps) => {
   }, 100);
 
   const onHeightChange = debounce((value: number) => {
-    if (!isValidNumber(value)) {
+    if (!isValidImageDimension(value)) {
       return;
     }
     if (keepAspectRatio) {

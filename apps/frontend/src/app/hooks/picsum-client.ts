@@ -5,15 +5,14 @@ import { delayedPromise } from '../utils';
 
 const TOTAL_COUNT = 10 * 100; // Found it using pagination with limit 100 https://picsum.photos/v2/list?page=10&limit=100
 
-export const usePicsumImageFilters = (
-  id: string,
-  options: {
-    width: number;
-    height: number;
-    blur?: number;
-    grayscale?: boolean;
-  }
-) => {
+export type PicsumImageOptions = {
+  width: number;
+  height: number;
+  blur?: number;
+  grayscale?: boolean;
+};
+
+export const getPicsumImageUrl = (id: string, options: PicsumImageOptions) => {
   const width = Math.floor(options.width);
   const height = Math.floor(options.height);
   const params = new URLSearchParams();
@@ -106,5 +105,37 @@ export const usePicSumImagesPaginated = ({
     loadPage,
     loadNext,
     loadPrevious,
+  };
+};
+
+export const usePicsumImage = (id: string, options: PicsumImageOptions) => {
+  const [isLoading, setLoading] = useState(false);
+  const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const url = useMemo(() => getPicsumImageUrl(id, options), [id, options]);
+
+  const loadImage = useCallback(async () => {
+    setLoading(true);
+    await delayedPromise(200).then(
+      () =>
+        new Promise<void>((resolve) => {
+          const img = new Image();
+          img.crossOrigin = 'anonymous';
+          img.onload = () => {
+            resolve();
+            setImage(img);
+            setLoading(false);
+          };
+          img.src = url;
+        })
+    );
+  }, [url]);
+
+  useEffect(() => {
+    loadImage();
+  }, [loadImage]);
+
+  return {
+    isLoading,
+    image,
   };
 };

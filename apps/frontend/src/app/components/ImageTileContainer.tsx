@@ -1,6 +1,6 @@
 import { ImageTile } from '@picsum-image-editor/components';
 
-import { usePicsumImageFilters } from '../hooks';
+import { getPicsumImageUrl } from '../hooks';
 import { PicSumImageDetails } from '../types';
 
 export type ImageTileContainerProps = {
@@ -11,7 +11,7 @@ export const ImageTileContainer = ({
   image,
   size,
 }: ImageTileContainerProps) => {
-  const imageTileUrl = usePicsumImageFilters(image.id, {
+  const imageTileUrl = getPicsumImageUrl(image.id, {
     width: size,
     height: size,
     // blur: Math.random() < 0.1 ? 11 * Math.random() : 0,
