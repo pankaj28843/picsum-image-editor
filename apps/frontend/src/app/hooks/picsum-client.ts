@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react';
 
 import { PicSumImageDetails } from '../types';
 
-const LIMIT = 100;
+const LIMIT = 60;
 
 export const usePicSumImages = (page: number) => {
   const [images, setImages] = useState<PicSumImageDetails[]>([]);

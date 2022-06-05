@@ -1,4 +1,5 @@
-import { ImageTile } from '../components/ImageTile';
+import { Grid } from '@mui/material';
+import { ImageTileContainer } from '../components';
 import { usePicSumImages } from '../hooks';
 
 export const HomePage = () => {
@@ -9,7 +10,13 @@ export const HomePage = () => {
       {isLoading ? (
         <h1>Loading...</h1>
       ) : (
-        images.map((image) => <ImageTile key={image.id} image={image} />)
+        <Grid container spacing={2}>
+          {images.map((image) => (
+            <Grid item key={image.id}>
+              <ImageTileContainer image={image} />
+            </Grid>
+          ))}
+        </Grid>
       )}
     </>
   );

@@ -1,11 +1,16 @@
+import { ImageTile } from '@picsum-image-editor/components';
+
 import { usePicsumImageFilters } from '../hooks';
 import { PicSumImageDetails } from '../types';
 
-export type ImageTileProps = {
+export type ImageTileContainerProps = {
   image: PicSumImageDetails;
   size?: number;
 };
-export const ImageTile = ({ image, size = 500 }: ImageTileProps) => {
+export const ImageTileContainer = ({
+  image,
+  size = 300,
+}: ImageTileContainerProps) => {
   const imageTileUrl = usePicsumImageFilters(image.id, {
     width: size,
     height: size,
@@ -14,14 +19,11 @@ export const ImageTile = ({ image, size = 500 }: ImageTileProps) => {
   });
 
   return (
-    <img
+    <ImageTile
       src={imageTileUrl}
-      alt={image.author}
-      style={{
-        padding: '0.25rem',
-        margin: '0.5rem',
-        border: 'dashed 2px #ccc',
-      }}
+      author={image.author}
+      width={size}
+      height={size}
     />
   );
 };
