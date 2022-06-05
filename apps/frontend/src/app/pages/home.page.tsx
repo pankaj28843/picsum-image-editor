@@ -1,4 +1,5 @@
 import { Grid } from '@mui/material';
+
 import { ImageTileContainer } from '../components';
 import { usePicSumImages } from '../hooks';
 
