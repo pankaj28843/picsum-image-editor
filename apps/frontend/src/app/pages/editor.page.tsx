@@ -1,23 +1,24 @@
 import { Box, Container } from '@mui/material';
 import { useState } from 'react';
+import { Navigate, useParams } from 'react-router-dom';
 
 import {
   BlurInput,
   GrayscaleInput,
-  ImageTile,
   SizeInput,
 } from '@picsum-image-editor/components';
 
 import { ImagePreview } from '../components/ImagePreview';
-import { getPicsumImageUrl, usePicsumImage } from '../hooks';
 
 export const EditorPage = () => {
   const [blur, setBlur] = useState(0);
   const [grayscale, setGrayscale] = useState(false);
-  const [[width, height], setSize] = useState([500, 500]);
-  const [imageId, _setImageId] = useState(
-    Math.floor(1 + 1000 * Math.random()).toString()
-  );
+  const [[width, height], setSize] = useState([1080, 600]);
+  const { imageId } = useParams();
+
+  if (!imageId) {
+    return <Navigate to="/" />;
+  }
 
   return (
     <Container

@@ -1,4 +1,5 @@
 import { Box, Container, Grid, Pagination, Typography } from '@mui/material';
+import { Link } from 'react-router-dom';
 
 import { Loader } from '@picsum-image-editor/components';
 
@@ -51,7 +52,9 @@ export const BrowseImages = () => {
           >
             {images.map((image) => (
               <Grid item key={image.id}>
-                <ImageTileContainer image={image} size={250} />
+                <Link to={`/editor/${image.id}`}>
+                  <ImageTileContainer image={image} size={250} />
+                </Link>
               </Grid>
             ))}
           </Grid>

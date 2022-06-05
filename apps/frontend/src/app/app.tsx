@@ -31,7 +31,7 @@ export default function App() {
               Browse Images
             </Link>
             <Link
-              to="/editor"
+              to="/editor/1"
               component={RouterLink}
               sx={{
                 mx: '10px',
@@ -58,7 +58,7 @@ export default function App() {
           >
             <Routes>
               <Route path="/browse-images" element={<HomePage />} />
-              <Route path="/editor" element={<EditorPage />} />
+              <Route path="/editor/:imageId" element={<EditorPage />} />
 
               <Route
                 path="*"
