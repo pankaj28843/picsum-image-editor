@@ -6,7 +6,7 @@ import {
   Typography,
 } from '@mui/material';
 import debounce from 'lodash/debounce';
-import { useEffect, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 
 export type SizeInputProps = {
   initialValue: {
@@ -19,6 +19,8 @@ export type SizeInputProps = {
 const isValidNumber = (value: number) => !isNaN(value) && value >= 1;
 
 export const SizeInput = ({ initialValue, onChange }: SizeInputProps) => {
+  const debouncedOnChange = useMemo(() => debounce(onChange, 500), [onChange]);
+
   const [width, setWidth] = useState(initialValue.width);
   const [height, setHeight] = useState(initialValue.height);
 
@@ -46,16 +48,12 @@ export const SizeInput = ({ initialValue, onChange }: SizeInputProps) => {
     setHeight(value);
   }, 100);
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(
-    debounce(() => {
-      setAspectRatio(width / height);
-      if (width !== initialValue.width || height !== initialValue.height) {
-        onChange({ width, height });
-      }
-    }, 1000),
-    [width, height, onChange, initialValue]
-  );
+  useEffect(() => {
+    setAspectRatio(width / height);
+    if (width !== initialValue.width || height !== initialValue.height) {
+      debouncedOnChange({ width, height });
+    }
+  }, [width, height, debouncedOnChange, initialValue]);
 
   return (
     <Box

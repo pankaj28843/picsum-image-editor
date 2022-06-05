@@ -1,5 +1,6 @@
 import { Box, Slider, Tooltip, Typography } from '@mui/material';
-import { useEffect, useState } from 'react';
+import debounce from 'lodash/debounce';
+import { useEffect, useMemo, useState } from 'react';
 
 export type BlurInputProps = {
   min: number;
@@ -15,8 +16,10 @@ export const BlurInput = ({
   onChange,
 }: BlurInputProps) => {
   const [value, setValue] = useState(initialValue);
+  const debouncedOnChange = useMemo(() => debounce(onChange, 500), [onChange]);
+
   useEffect(() => {
-    onChange(value);
+    debouncedOnChange(value);
   });
 
   return (
