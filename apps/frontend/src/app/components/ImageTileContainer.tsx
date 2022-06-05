@@ -14,8 +14,8 @@ export const ImageTileContainer = ({
   const imageTileUrl = usePicsumImageFilters(image.id, {
     width: size,
     height: size,
-    blur: Math.random() < 0.1 ? 11 * Math.random() : 0,
-    grayscale: Math.random() < 0.1,
+    // blur: Math.random() < 0.1 ? 11 * Math.random() : 0,
+    // grayscale: Math.random() < 0.1,
   });
 
   return (

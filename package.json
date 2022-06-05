@@ -6,7 +6,8 @@
     "nx": "nx",
     "start": "nx serve",
     "build": "nx build",
-    "test": "nx test",
+    "lint": "nx run-many --parallel 6 --verbose --all --target=lint",
+    "test": "nx run-many --parallel 6 --verbose --all --target=test --runInBand",
     "storybook": "nx storybook"
   },
   "private": true,

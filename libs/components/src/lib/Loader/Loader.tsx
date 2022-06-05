@@ -6,7 +6,6 @@ export const Loader = () => (
       height: '100%',
       width: '100%',
       display: 'flex',
-      flexGrow: 1,
       alignItems: 'center',
       justifyContent: 'center',
     }}
