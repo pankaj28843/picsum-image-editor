@@ -35,7 +35,7 @@ export const usePicsumImageFilters = (
 
 export const usePicSumImagesPaginated = ({
   limit = 20,
-  loadDelay = 500,
+  loadDelay = 200,
 }: {
   limit?: number;
   loadDelay?: number;
@@ -78,7 +78,7 @@ export const usePicSumImagesPaginated = ({
         setLoading(false);
       }
     },
-    [limit, setImages, setLoading]
+    [limit, loadDelay]
   );
 
   useEffect(() => {
