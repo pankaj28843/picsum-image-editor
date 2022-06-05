@@ -10,10 +10,11 @@ import App from './app/app';
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
+
 root.render(
   <StrictMode>
     <ThemeProvider theme={theme}>
-      <BrowserRouter>
+      <BrowserRouter basename={process.env['NX_BASE_HREF']}>
         <App />
       </BrowserRouter>
     </ThemeProvider>

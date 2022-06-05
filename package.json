@@ -2,13 +2,16 @@
   "name": "picsum-image-editor",
   "version": "0.0.0",
   "license": "MIT",
+  "homepage": "https://pankaj28843.github.io/picsum-image-editor/",
   "scripts": {
     "nx": "nx",
-    "start": "nx serve",
+    "start": "NX_BASE_HREF=/ nx serve",
     "build": "nx build",
     "lint": "nx run-many --parallel 6 --verbose --all --target=lint",
     "test": "nx run-many --parallel 6 --verbose --all --target=test --runInBand",
-    "storybook": "nx storybook"
+    "storybook": "nx storybook",
+    "predeploy": "NX_BASE_HREF=/picsum-image-editor/ npm run build frontend -- --baseHref=/picsum-image-editor/",
+    "deploy": "gh-pages -d dist/apps/frontend/"
   },
   "private": true,
   "dependencies": {
@@ -61,6 +64,7 @@
     "eslint-plugin-jsx-a11y": "6.5.1",
     "eslint-plugin-react": "7.29.4",
     "eslint-plugin-react-hooks": "4.5.0",
+    "gh-pages": "^4.0.0",
     "jest": "27.5.1",
     "nx": "14.1.9",
     "prettier": "^2.5.1",
