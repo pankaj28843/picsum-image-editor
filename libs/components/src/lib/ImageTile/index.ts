@@ -1,1 +1,1 @@
-export { ImageTile, ImageTileProps } from './ImageTile';
+export * from './ImageTile';

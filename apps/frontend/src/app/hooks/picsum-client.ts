@@ -2,21 +2,19 @@ import { useEffect, useState } from 'react';
 
 import { PicSumImageDetails } from '../types';
 
-const LIMIT = 60;
-
-export const usePicSumImages = (page: number) => {
+export const usePicSumImages = (page: number, limit = 20) => {
   const [images, setImages] = useState<PicSumImageDetails[]>([]);
   const [isLoading, setLoading] = useState(false);
 
   useEffect(() => {
     setLoading(true);
-    fetch(`https://picsum.photos/v2/list?page=${page}&limit=${LIMIT}`)
+    fetch(`https://picsum.photos/v2/list?page=${page}&limit=${limit}`)
       .then((res) => res.json())
       .then((data) => {
         setImages(data);
       })
       .finally(() => setLoading(false));
-  }, [page, setImages, setLoading]);
+  }, [page, limit, setImages, setLoading]);
 
   return { images, isLoading };
 };

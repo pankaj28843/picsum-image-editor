@@ -1,4 +1,13 @@
-import { Link, Navigate, Route, Routes } from 'react-router-dom';
+import {
+  AppBar,
+  Box,
+  Button,
+  Container,
+  CssBaseline,
+  Link,
+  Toolbar,
+} from '@mui/material';
+import { Navigate, Route, Link as RouterLink, Routes } from 'react-router-dom';
 
 import { EditorPage } from './pages/editor.page';
 import { HomePage } from './pages/home.page';
@@ -6,23 +15,71 @@ import { HomePage } from './pages/home.page';
 export default function App() {
   return (
     <>
-      <div>
-        <nav
-          style={{
-            borderBottom: 'solid 1px',
-            paddingBottom: '1rem',
+      <CssBaseline />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100vh',
+          overflow: 'hidden',
+        }}
+      >
+        <Box
+          sx={{
+            flexGrow: 1,
+            flexDirection: 'row',
+            height: 'fit-content',
           }}
         >
-          <Link to="/browse-images">Browse Images</Link> |{' '}
-          <Link to="/editor">Editor</Link>
-        </nav>
-      </div>
-      <Routes>
-        <Route path="/browse-images" element={<HomePage />} />
-        <Route path="/editor" element={<EditorPage />} />
+          <AppBar position="static">
+            <Toolbar>
+              <Link
+                to="/browse-images"
+                component={RouterLink}
+                sx={{
+                  mx: '10px',
+                  fontSize: '1.1rem',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                Browse Images
+              </Link>
+              <Link
+                to="/editor"
+                component={RouterLink}
+                sx={{
+                  mx: '10px',
+                  fontSize: '1.1rem',
+                  textDecoration: 'none',
+                  color: 'inherit',
+                }}
+              >
+                Editor
+              </Link>
+            </Toolbar>
+          </AppBar>
+        </Box>
+        <Box
+          sx={{
+            flexGrow: 1,
+            overflow: 'auto',
+            py: '10px',
+          }}
+        >
+          <Container fixed>
+            <Routes>
+              <Route path="/browse-images" element={<HomePage />} />
+              <Route path="/editor" element={<EditorPage />} />
 
-        <Route path="*" element={<Navigate to="/browse-images" replace />} />
-      </Routes>
+              <Route
+                path="*"
+                element={<Navigate to="/browse-images" replace />}
+              />
+            </Routes>
+          </Container>
+        </Box>
+      </Box>
     </>
   );
 }

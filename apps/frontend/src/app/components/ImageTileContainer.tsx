@@ -5,11 +5,11 @@ import { PicSumImageDetails } from '../types';
 
 export type ImageTileContainerProps = {
   image: PicSumImageDetails;
-  size?: number;
+  size: number;
 };
 export const ImageTileContainer = ({
   image,
-  size = 300,
+  size,
 }: ImageTileContainerProps) => {
   const imageTileUrl = usePicsumImageFilters(image.id, {
     width: size,

@@ -1,4 +1,1 @@
-export {
-  ImageTileContainer,
-  ImageTileContainerProps,
-} from './ImageTileContainer';
+export * from './ImageTileContainer';
