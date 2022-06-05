@@ -1,7 +1,5 @@
 export const EditorPage = () => {
   return (
-    <>
-      <h1>Editor</h1>
-    </>
+    <h1>Editor</h1>
   );
 };
