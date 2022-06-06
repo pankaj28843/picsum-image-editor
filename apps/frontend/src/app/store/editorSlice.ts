@@ -16,7 +16,7 @@ export type EditorState = {
 const initialState: EditorState = {
   image: null,
   options: {
-    width: 1000,
+    width: 400,
     height: 400,
     blur: 0,
     grayscale: false,

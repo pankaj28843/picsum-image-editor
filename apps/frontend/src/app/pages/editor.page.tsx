@@ -8,7 +8,6 @@ import {
 } from '@picsum-image-editor/components';
 
 import { ImagePreview } from '../components/ImagePreview';
-import { useDebounce } from '../hooks';
 import {
   updateBlur,
   updateGrayscale,
@@ -20,18 +19,10 @@ import {
 export const EditorPage = () => {
   const dispatch = useAppDispatch();
   const { image, options } = useAppSelector((state) => state.editor);
-  const setBlur = useDebounce(
-    (value: number) => dispatch(updateBlur(value)),
-    200
-  );
-  const setGrayscale = useDebounce(
-    (value: boolean) => dispatch(updateGrayscale(value)),
-    200
-  );
-  const setSize = useDebounce(
-    (size: { width: number; height: number }) => dispatch(updateSize(size)),
-    200
-  );
+  const setBlur = (value: number) => dispatch(updateBlur(value));
+  const setGrayscale = (value: boolean) => dispatch(updateGrayscale(value));
+  const setSize = (size: { width: number; height: number }) =>
+    dispatch(updateSize(size));
 
   if (!image) {
     return <Navigate to="/" />;

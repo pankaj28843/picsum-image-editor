@@ -101,47 +101,64 @@ export const usePicsumImagesPaginated = ({
   };
 };
 
-export const usePicsumImage = (id: string, options: PicsumImageOptions) => {
-  const [isLoading, setLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
+export const usePicsumImage = (
+  id: string,
+  options: PicsumImageOptions
+): {
+  image: HTMLImageElement | null;
+  imageDataUrl: string | null;
+  isLoading: boolean;
+  hasError: boolean;
+} => {
+  const isLoading = useRef(false);
+  const hasError = useRef(false);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [imageDataUrl, setImageDataUrl] = useState<string | null>(null);
 
-  const loadImage = useCallback(async (url: string) => {
-    setLoading(true);
-    setHasError(false);
+  const resetToLoading = useCallback(() => {
+    isLoading.current = true;
+    hasError.current = false;
     setImageDataUrl(null);
-
-    try {
-      const imgData = await fetch(url).then((res) => res.blob());
-      const dataUrl = URL.createObjectURL(imgData);
-      setImageDataUrl(dataUrl);
-
-      const img = new Image();
-      img.src = dataUrl;
-      setImage(img);
-    } catch (err) {
-      console.error(err);
-      setHasError(true);
-    } finally {
-      setLoading(false);
-    }
+    setImage(null);
   }, []);
+
+  const loadImage = useCallback(
+    async (url: string) => {
+      resetToLoading();
+      try {
+        const imgData = await fetch(url).then((res) => res.blob());
+        const dataUrl = URL.createObjectURL(imgData);
+        setImageDataUrl(dataUrl);
+
+        const img = new Image();
+        img.src = dataUrl;
+        setImage(img);
+      } catch (err) {
+        console.error(err);
+        hasError.current = true;
+      } finally {
+        isLoading.current = false;
+      }
+    },
+    [resetToLoading]
+  );
 
   const url = useMemo(() => getPicsumImageUrl(id, options), [id, options]);
 
   const debounceTimerId = useRef<number | null>(null);
+
   useEffect(() => {
+    resetToLoading();
     if (debounceTimerId.current) {
       clearTimeout(debounceTimerId.current);
     }
     debounceTimerId.current = window.setTimeout(() => loadImage(url), 200);
-  }, [loadImage, url]);
+  }, [resetToLoading, loadImage, url]);
 
   return {
-    isLoading,
-    image,
-    imageDataUrl,
-    hasError,
+    isLoading: isLoading.current,
+    hasError: hasError.current,
+    image: image,
+    imageDataUrl: imageDataUrl,
   };
 };

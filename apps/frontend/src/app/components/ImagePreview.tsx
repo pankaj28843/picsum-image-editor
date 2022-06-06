@@ -1,7 +1,7 @@
 import { DownloadDoneOutlined } from '@mui/icons-material';
 import { Button } from '@mui/material';
 import { Box } from '@mui/system';
-import { useEffect, useRef } from 'react';
+import { useRef } from 'react';
 
 import { Loader } from '@picsum-image-editor/components';
 
@@ -46,17 +46,15 @@ export const ImagePreview = ({
     document.body.removeChild(a);
   };
 
-  useEffect(() => {
-    if (image && canvasRef.current) {
-      const canvas = canvasRef.current;
-      const ctx = canvas.getContext('2d');
-      if (ctx) {
-        ctx.imageSmoothingEnabled = false;
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        ctx.drawImage(image, 0, 0);
-      }
+  if (image && canvasRef.current) {
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
+    if (ctx) {
+      ctx.imageSmoothingEnabled = false;
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.drawImage(image, 0, 0);
     }
-  });
+  }
 
   return (
     <Box
@@ -87,7 +85,7 @@ export const ImagePreview = ({
         </Button>
       </Box>
 
-      {isLoading ? (
+      {isLoading || !imageDataUrl ? (
         <Loader />
       ) : (
         <Box
@@ -96,7 +94,7 @@ export const ImagePreview = ({
             overflow: 'auto',
           }}
         >
-          <canvas ref={canvasRef} width={width} height={height}></canvas>
+          <img src={imageDataUrl} width={width} height={height} alt="" />
         </Box>
       )}
     </Box>
