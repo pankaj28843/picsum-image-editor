@@ -1,16 +1,9 @@
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
-import { PicSumImageDetails } from '../types';
+import { PicsumImageDetails, PicsumImageOptions } from '../types';
 import { delayedPromise } from '../utils';
 
 const TOTAL_COUNT = 10 * 100; // Found it using pagination with limit 100 https://picsum.photos/v2/list?page=10&limit=100
-
-export type PicsumImageOptions = {
-  width: number;
-  height: number;
-  blur?: number;
-  grayscale?: boolean;
-};
 
 export const getPicsumImageUrl = (id: string, options: PicsumImageOptions) => {
   const width = Math.floor(options.width);
@@ -32,7 +25,7 @@ export const getPicsumImageUrl = (id: string, options: PicsumImageOptions) => {
   return url;
 };
 
-export const usePicSumImagesPaginated = ({
+export const usePicsumImagesPaginated = ({
   limit = 20,
   loadDelay = 200,
 }: {
@@ -43,7 +36,7 @@ export const usePicSumImagesPaginated = ({
     throw new Error('Limit must be between 1 and 100');
   }
 
-  const [images, setImages] = useState<PicSumImageDetails[]>([]);
+  const [images, setImages] = useState<PicsumImageDetails[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 

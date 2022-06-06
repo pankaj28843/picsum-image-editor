@@ -1,10 +1,10 @@
 import { ImageTile } from '@picsum-image-editor/components';
 
 import { getPicsumImageUrl } from '../hooks';
-import { PicSumImageDetails } from '../types';
+import { PicsumImageDetails } from '../types';
 
 export type ImageTileContainerProps = {
-  image: PicSumImageDetails;
+  image: PicsumImageDetails;
   size: number;
 };
 export const ImageTileContainer = ({

@@ -1,11 +1,14 @@
 import { ThemeProvider } from '@mui/material';
 import { StrictMode } from 'react';
 import * as ReactDOM from 'react-dom/client';
+import { Provider } from 'react-redux';
 import { BrowserRouter } from 'react-router-dom';
+import { PersistGate } from 'redux-persist/integration/react';
 
-import { theme } from '@picsum-image-editor/components';
+import { Loader, theme } from '@picsum-image-editor/components';
 
 import App from './app/app';
+import { persistor, store } from './app/store';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
@@ -13,10 +16,14 @@ const root = ReactDOM.createRoot(
 
 root.render(
   <StrictMode>
-    <ThemeProvider theme={theme}>
-      <BrowserRouter basename={process.env['NX_BASE_HREF']}>
-        <App />
-      </BrowserRouter>
-    </ThemeProvider>
+    <Provider store={store}>
+      <PersistGate loading={<Loader />} persistor={persistor}>
+        <ThemeProvider theme={theme}>
+          <BrowserRouter basename={process.env['NX_BASE_HREF']}>
+            <App />
+          </BrowserRouter>
+        </ThemeProvider>
+      </PersistGate>
+    </Provider>
   </StrictMode>
 );
