@@ -57,13 +57,10 @@ export default function App() {
             }}
           >
             <Routes>
-              <Route path="/browse-images" element={<HomePage />} />
+              <Route path="/" element={<HomePage />} />
               <Route path="/editor/:imageId" element={<EditorPage />} />
 
-              <Route
-                path="*"
-                element={<Navigate to="/browse-images" replace />}
-              />
+              <Route path="*" element={<Navigate to="/" replace />} />
             </Routes>
           </Box>
         </Box>
