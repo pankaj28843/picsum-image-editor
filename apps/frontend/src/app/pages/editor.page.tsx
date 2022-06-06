@@ -1,30 +1,28 @@
 import { Box } from '@mui/material';
 import { Navigate } from 'react-router-dom';
 
-import {
-  BlurInput,
-  GrayscaleInput,
-  SizeInput,
-} from '@picsum-image-editor/components';
+import { Loader } from '@picsum-image-editor/components';
 
-import { ImagePreview } from '../components/ImagePreview';
 import {
-  updateBlur,
-  updateGrayscale,
-  updateSize,
-  useAppDispatch,
-  useAppSelector,
-} from '../store';
+  BlurInputContainer,
+  DownloadImage,
+  GrayscaleInputContainer,
+  ImagePreview,
+  SizeInputContainer,
+} from '../components';
+import { usePicsumImage } from '../hooks';
+import { useAppSelector } from '../store';
 
 export const EditorPage = () => {
-  const dispatch = useAppDispatch();
-  const { image, options } = useAppSelector((state) => state.editor);
-  const setBlur = (value: number) => dispatch(updateBlur(value));
-  const setGrayscale = (value: boolean) => dispatch(updateGrayscale(value));
-  const setSize = (size: { width: number; height: number }) =>
-    dispatch(updateSize(size));
+  const { image: imageDetails, options } = useAppSelector(
+    (state) => state.editor
+  );
+  const { isLoading, imageDataUrl } = usePicsumImage(
+    imageDetails?.id || '1',
+    options
+  );
 
-  if (!image) {
+  if (!imageDetails) {
     return <Navigate to="/" />;
   }
 
@@ -43,20 +41,10 @@ export const EditorPage = () => {
           height: 'fit-content',
         }}
       >
-        <BlurInput
-          min={0}
-          max={10}
-          initialValue={options.blur}
-          onChange={setBlur}
-        />
-        <SizeInput
-          initialValue={{ height: options.height, width: options.width }}
-          onChange={setSize}
-        />
-        <GrayscaleInput
-          initialValue={options.grayscale}
-          onChange={setGrayscale}
-        />
+        <BlurInputContainer />
+        <SizeInputContainer />
+        <GrayscaleInputContainer />
+        {imageDataUrl && <DownloadImage imageDataUrl={imageDataUrl} />}
       </Box>
       <Box
         sx={{
@@ -64,7 +52,15 @@ export const EditorPage = () => {
           overflow: 'hidden',
         }}
       >
-        <ImagePreview {...{ id: image.id, ...options }} />
+        {isLoading || !imageDataUrl ? (
+          <Loader />
+        ) : (
+          <ImagePreview
+            imageDataUrl={imageDataUrl}
+            width={options.width}
+            height={options.height}
+          />
+        )}
       </Box>
     </Box>
   );

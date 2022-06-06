@@ -27,17 +27,17 @@ export const BlurInput = ({
         flexDirection: 'row',
         justifyItems: 'space-between',
         alignItems: 'center',
+        padding: '10px',
       }}
     >
       <Box
         sx={{
-          width: 'fit-content',
+          width: 'max-content',
           height: '100%',
         }}
       >
         <Typography
           sx={{
-            padding: '20px',
             verticalAlign: 'middle',
           }}
           variant="body2"
@@ -50,6 +50,7 @@ export const BlurInput = ({
       <Box
         sx={{
           flexGrow: 1,
+          marginLeft: '20px',
         }}
       >
         <Slider
