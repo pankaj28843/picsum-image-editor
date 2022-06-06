@@ -18,7 +18,7 @@ export const BlurInputContainer = () => {
       popoverContent={
         <Box
           sx={{
-            width: '300px',
+            minWidth: '300px',
             height: 'fit-content',
             padding: '0.5rem',
           }}

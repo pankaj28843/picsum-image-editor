@@ -1,4 +1,10 @@
-import { IconButton, Popover, PopoverOrigin, Tooltip } from '@mui/material';
+import {
+  Box,
+  IconButton,
+  Popover,
+  PopoverOrigin,
+  Tooltip,
+} from '@mui/material';
 import { useRef, useState } from 'react';
 
 export type IconPopoverProps = {
@@ -13,8 +19,8 @@ export const IconPopover = ({
   popoverContent,
   tooltipText,
   anchorOrigin = {
-    vertical: 'bottom',
-    horizontal: 'left',
+    vertical: 'top',
+    horizontal: 'right',
   },
   transformOrigin = {
     vertical: 'top',
@@ -27,9 +33,25 @@ export const IconPopover = ({
   return (
     <>
       <Tooltip title={tooltipText}>
-        <IconButton ref={anchorEl} onClick={() => setOpen(true)}>
-          {icon}
-        </IconButton>
+        <Box
+          sx={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+          }}
+        >
+          <IconButton
+            ref={anchorEl}
+            onClick={() => setOpen(true)}
+            sx={{
+              color: 'primary.contrastText',
+              width: 'max-content',
+              height: 'max-content',
+            }}
+          >
+            {icon}
+          </IconButton>
+        </Box>
       </Tooltip>
       <Popover
         open={open}

@@ -26,7 +26,7 @@ export const getPicsumImageUrl = (id: string, options: PicsumImageOptions) => {
 };
 
 export const usePicsumImagesPaginated = ({
-  limit = 20,
+  limit = 30,
   loadDelay = 200,
 }: {
   limit?: number;
@@ -106,14 +106,14 @@ export const usePicsumImage = (
   options: PicsumImageOptions
 ): {
   image: HTMLImageElement | null;
-  imageDataUrl: string | null;
+  imageBlobUrl: string | null;
   isLoading: boolean;
   hasError: boolean;
 } => {
   const isLoading = useRef(false);
   const hasError = useRef(false);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
-  const [imageDataUrl, setImageDataUrl] = useState<string | null>(null);
+  const [imageBlobUrl, setImageDataUrl] = useState<string | null>(null);
 
   const resetToLoading = useCallback(() => {
     isLoading.current = true;
@@ -159,6 +159,6 @@ export const usePicsumImage = (
     isLoading: isLoading.current,
     hasError: hasError.current,
     image: image,
-    imageDataUrl: imageDataUrl,
+    imageBlobUrl: imageBlobUrl,
   };
 };

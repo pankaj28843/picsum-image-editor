@@ -1,5 +1,5 @@
-import { AppBar, Box, CssBaseline, Link, Toolbar } from '@mui/material';
-import { Navigate, Route, Link as RouterLink, Routes } from 'react-router-dom';
+import { Box, CssBaseline } from '@mui/material';
+import { Navigate, Route, Routes } from 'react-router-dom';
 
 import { EditorPage } from './pages/editor.page';
 import { HomePage } from './pages/home.page';
@@ -13,57 +13,15 @@ export default function App() {
           display: 'flex',
           flexDirection: 'column',
           height: '100vh',
-          overflow: 'hidden',
+          overflow: 'auto',
         }}
       >
-        <AppBar position="static">
-          <Toolbar>
-            <Link
-              to="/browse-images"
-              component={RouterLink}
-              sx={{
-                mx: '10px',
-                fontSize: '1.1rem',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-            >
-              Browse Images
-            </Link>
-            <Link
-              to="/editor/"
-              component={RouterLink}
-              sx={{
-                mx: '10px',
-                fontSize: '1.1rem',
-                textDecoration: 'none',
-                color: 'inherit',
-              }}
-            >
-              Editor
-            </Link>
-          </Toolbar>
-        </AppBar>
-        <Box
-          sx={{
-            flexGrow: 1,
-            py: '10px',
-            overflow: 'hidden',
-          }}
-        >
-          <Box
-            sx={{
-              height: '100%',
-            }}
-          >
-            <Routes>
-              <Route path="/" element={<HomePage />} />
-              <Route path="/editor/" element={<EditorPage />} />
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/editor/" element={<EditorPage />} />
 
-              <Route path="*" element={<Navigate to="/" replace />} />
-            </Routes>
-          </Box>
-        </Box>
+          <Route path="*" element={<Navigate to="/" replace />} />
+        </Routes>
       </Box>
     </>
   );

@@ -1,14 +1,10 @@
 import { Theme, ThemeOptions, createTheme } from '@mui/material';
+import { pink, teal } from '@mui/material/colors';
 
 export const themeOptions: ThemeOptions = {
   palette: {
-    primary: {
-      main: '#08b2b2',
-      contrastText: '#fff',
-    },
-    secondary: {
-      main: '#f50057',
-    },
+    primary: teal,
+    secondary: pink,
   },
 };
 

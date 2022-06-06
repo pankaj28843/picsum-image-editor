@@ -1,32 +1,32 @@
 import { Box } from '@mui/system';
 
 export type ImagePreviewProps = {
-  imageDataUrl: string;
+  imageBlobUrl: string;
   width: number;
   height: number;
 };
 export const ImagePreview = ({
-  imageDataUrl,
+  imageBlobUrl,
   width,
   height,
 }: ImagePreviewProps) => {
   return (
     <Box
       sx={{
-        display: 'flex',
-        flexDirection: 'column',
         height: '100%',
-        overflow: 'hidden',
+        width: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
       }}
     >
-      <Box
-        sx={{
-          flexGrow: 1,
-          overflow: 'auto',
-        }}
-      >
-        <img src={imageDataUrl} width={width} height={height} alt="" />
-      </Box>
+      <img
+        src={imageBlobUrl}
+        width={width}
+        height={height}
+        alt=""
+        style={{ padding: '10px', display: 'block' }}
+      />
     </Box>
   );
 };

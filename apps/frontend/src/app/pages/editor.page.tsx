@@ -1,10 +1,11 @@
-import { Box } from '@mui/material';
-import { Navigate } from 'react-router-dom';
+import { Box, Divider } from '@mui/material';
+import { Navigate, useNavigate } from 'react-router-dom';
 
-import { Loader } from '@picsum-image-editor/components';
+import { Loader, SideNav } from '@picsum-image-editor/components';
 
 import {
   BlurInputContainer,
+  BrowseImagesIcon,
   DownloadImage,
   GrayscaleInputContainer,
   ImagePreview,
@@ -14,10 +15,11 @@ import { usePicsumImage } from '../hooks';
 import { useAppSelector } from '../store';
 
 export const EditorPage = () => {
+  const navigate = useNavigate();
   const { image: imageDetails, options } = useAppSelector(
     (state) => state.editor
   );
-  const { isLoading, imageDataUrl } = usePicsumImage(
+  const { isLoading, imageBlobUrl } = usePicsumImage(
     imageDetails?.id || '1',
     options
   );
@@ -27,36 +29,30 @@ export const EditorPage = () => {
   }
 
   return (
-    <Box
-      sx={{
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-      }}
-    >
-      <Box
-        sx={{
-          maxWidth: '600px',
-          height: 'fit-content',
-        }}
-      >
+    <Box sx={{ display: 'flex', height: '100%' }}>
+      <SideNav>
+        <BrowseImagesIcon onClick={() => navigate('/')} />
+        <Divider />
         <BlurInputContainer />
         <SizeInputContainer />
         <GrayscaleInputContainer />
-        {imageDataUrl && <DownloadImage imageDataUrl={imageDataUrl} />}
-      </Box>
+        <Divider />
+        <DownloadImage
+          imageBlobUrl={imageBlobUrl}
+          filename={`Photo by ${imageDetails.author}.png`}
+        />
+      </SideNav>
       <Box
+        component="main"
         sx={{
           flexGrow: 1,
-          overflow: 'hidden',
         }}
       >
-        {isLoading || !imageDataUrl ? (
+        {isLoading || !imageBlobUrl ? (
           <Loader />
         ) : (
           <ImagePreview
-            imageDataUrl={imageDataUrl}
+            imageBlobUrl={imageBlobUrl}
             width={options.width}
             height={options.height}
           />

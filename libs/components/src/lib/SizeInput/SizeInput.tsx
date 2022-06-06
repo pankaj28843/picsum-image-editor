@@ -1,10 +1,4 @@
-import {
-  Box,
-  Checkbox,
-  FormControlLabel,
-  TextField,
-  Typography,
-} from '@mui/material';
+import { Box, Checkbox, FormControlLabel, TextField } from '@mui/material';
 import debounce from 'lodash/debounce';
 import { useEffect, useMemo, useState } from 'react';
 
@@ -57,32 +51,8 @@ export const SizeInput = ({ initialValue, onChange }: SizeInputProps) => {
   }, [width, height, debouncedOnChange, initialValue]);
 
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'row',
-        alignItems: 'center',
-        justifyContent: 'space-between',
-      }}
-    >
-      <Box
-        sx={{
-          width: 'fit-content',
-          height: '100%',
-        }}
-      >
-        <Typography
-          sx={{
-            padding: '20px',
-            verticalAlign: 'middle',
-          }}
-          variant="body2"
-          color="text.primary"
-        >
-          Size:
-        </Typography>
-      </Box>
-      <Box>
+    <>
+      <Box sx={{ marginBottom: '10px' }}>
         <FormControlLabel
           control={
             <Checkbox
@@ -93,24 +63,32 @@ export const SizeInput = ({ initialValue, onChange }: SizeInputProps) => {
           label="Preserve Aspect Ratio"
         />
       </Box>
-      <Box>
-        <TextField
-          sx={{ maxWidth: '100px' }}
-          label="Width"
-          type="number"
-          value={width}
-          onChange={(e) => onWidthChange(parseInt(e.target.value, 10))}
-        />
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+        }}
+      >
+        <Box>
+          <TextField
+            sx={{ width: '100px' }}
+            label="Width (px)"
+            type="number"
+            value={width}
+            onChange={(e) => onWidthChange(parseInt(e.target.value, 10))}
+          />
+        </Box>
+        <Box>
+          <TextField
+            sx={{ width: '100px' }}
+            label="Height (px)"
+            type="number"
+            value={height}
+            onChange={(e) => onHeightChange(parseInt(e.target.value, 10))}
+          />
+        </Box>
       </Box>
-      <Box>
-        <TextField
-          sx={{ maxWidth: '100px' }}
-          label="Height"
-          type="number"
-          value={height}
-          onChange={(e) => onHeightChange(parseInt(e.target.value, 10))}
-        />
-      </Box>
-    </Box>
+    </>
   );
 };

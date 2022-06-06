@@ -18,7 +18,7 @@ export const GrayscaleInputContainer = () => {
       popoverContent={
         <Box
           sx={{
-            width: '600px',
+            minWidth: '300px',
             height: 'fit-content',
             padding: '0.5rem',
           }}

@@ -1,4 +1,4 @@
-import { Box, Container, Grid, Pagination, Typography } from '@mui/material';
+import { Box, Grid, Pagination, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
 
 import { Loader } from '@picsum-image-editor/components';
@@ -29,7 +29,7 @@ export const BrowseImages = () => {
   } = usePicsumImagesPaginated();
 
   return (
-    <Container
+    <Box
       sx={{
         overflow: 'hidden',
         display: 'flex',
@@ -77,12 +77,13 @@ export const BrowseImages = () => {
           display: 'flex',
           flexDirection: 'row',
           justifyContent: 'center',
-          marginTop: '20px',
         }}
       >
         <Pagination
           variant="outlined"
           shape="rounded"
+          siblingCount={1}
+          boundaryCount={1}
           count={totalPages}
           hideNextButton={!hasNext}
           hidePrevButton={!hasPrevious}
@@ -90,9 +91,12 @@ export const BrowseImages = () => {
           showFirstButton={true}
           showLastButton={true}
           onChange={(_event, page) => loadPage(page)}
-          size="large"
+          size="medium"
+          sx={{
+            padding: '10px',
+          }}
         />
       </Box>
-    </Container>
+    </Box>
   );
 };

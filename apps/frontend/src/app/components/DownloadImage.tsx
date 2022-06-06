@@ -1,17 +1,21 @@
 import DownloadIcon from '@mui/icons-material/Download';
-import { IconButton, Tooltip } from '@mui/material';
+import { Box, IconButton, Tooltip } from '@mui/material';
 
 export type DownloadImageProps = {
-  imageDataUrl: string;
+  imageBlobUrl: string | null;
   filename?: string;
 };
 export const DownloadImage = ({
-  imageDataUrl,
+  imageBlobUrl,
   filename = 'Untitled.png',
 }: DownloadImageProps) => {
   const onDownloadClick = () => {
+    if (!imageBlobUrl) {
+      return;
+    }
+
     const a = document.createElement('a');
-    a.href = imageDataUrl;
+    a.href = imageBlobUrl;
     // a.href = data;
     a.target = '_blank';
     a.download = filename;
@@ -22,7 +26,25 @@ export const DownloadImage = ({
 
   return (
     <Tooltip title="Export Image as PNG">
-      <IconButton onClick={onDownloadClick}>{<DownloadIcon />}</IconButton>
+      <Box
+        sx={{
+          display: 'flex',
+          alignItems: 'center',
+          justifyContent: 'center',
+        }}
+      >
+        <IconButton
+          onClick={onDownloadClick}
+          disabled={!imageBlobUrl}
+          sx={{
+            color: 'primary.contrastText',
+            width: 'max-content',
+            height: 'max-content',
+          }}
+        >
+          <DownloadIcon />
+        </IconButton>
+      </Box>
     </Tooltip>
   );
 };
