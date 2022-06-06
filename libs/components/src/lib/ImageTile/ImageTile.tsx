@@ -1,12 +1,21 @@
-import { Box, Typography } from '@mui/material';
+import { Box, Link, Typography } from '@mui/material';
 
 export type ImageTileProps = {
   src: string;
+  originalUrl: string;
   author: string;
   width: number;
   height: number;
+  onClick?: () => void;
 };
-export const ImageTile = ({ src, author, width, height }: ImageTileProps) => {
+export const ImageTile = ({
+  src,
+  author,
+  width,
+  height,
+  originalUrl,
+  onClick,
+}: ImageTileProps) => {
   return (
     <Box
       sx={{
@@ -25,13 +34,15 @@ export const ImageTile = ({ src, author, width, height }: ImageTileProps) => {
           padding: '6px',
           borderRadius: '6px',
           boxShadow: 1,
+          cursor: onClick ? 'pointer' : 'default',
         }}
+        onClick={onClick}
         src={src}
         alt={author}
       />
-      <Typography variant="body2" color="text.secondary">
+      <Link href={originalUrl} target="_blank" color="text.secondary">
         {author}
-      </Typography>
+      </Link>
     </Box>
   );
 };

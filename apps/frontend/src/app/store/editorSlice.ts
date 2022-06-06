@@ -1,18 +1,23 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { PicsumImageDetails, PicsumImageOptions } from '../types';
+import { PicsumImageDetails } from '../types';
 import { RootState } from './types';
 
 export type EditorState = {
   image: PicsumImageDetails | null;
-  options: PicsumImageOptions;
+  options: {
+    width: number;
+    height: number;
+    blur: number;
+    grayscale: boolean;
+  };
 };
 
 const initialState: EditorState = {
   image: null,
   options: {
-    width: 200,
-    height: 200,
+    width: 1000,
+    height: 400,
     blur: 0,
     grayscale: false,
   },
@@ -26,6 +31,7 @@ export const editorSlice = createSlice({
     updateImage: (state, action: PayloadAction<PicsumImageDetails>) => ({
       ...state,
       image: action.payload,
+      options: { ...initialState.options },
     }),
     updateBlur: (state, action: PayloadAction<number>) => ({
       ...state,
@@ -48,6 +54,17 @@ export const editorSlice = createSlice({
         height: action.payload,
       },
     }),
+    updateSize: (
+      state,
+      action: PayloadAction<{ width: number; height: number }>
+    ) => ({
+      ...state,
+      options: {
+        ...state.options,
+        width: action.payload.width,
+        height: action.payload.height,
+      },
+    }),
     updateGrayscale: (state, action: PayloadAction<boolean>) => ({
       ...state,
       options: {
@@ -64,6 +81,7 @@ export const {
   updateBlur,
   updateWidth,
   updateHeight,
+  updateSize,
   updateGrayscale,
 } = editorSlice.actions;
 

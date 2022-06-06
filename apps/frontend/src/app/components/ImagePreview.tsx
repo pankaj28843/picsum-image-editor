@@ -23,7 +23,7 @@ export const ImagePreview = ({
 }: ImagePreviewProps) => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
 
-  const { image, isLoading } = usePicsumImage(id, {
+  const { image, isLoading, imageDataUrl } = usePicsumImage(id, {
     width,
     height,
     blur,
@@ -31,16 +31,19 @@ export const ImagePreview = ({
   });
 
   const onDownloadClick = () => {
-    if (!canvasRef.current) {
+    if (!imageDataUrl) {
       return;
     }
-    const data = canvasRef.current.toDataURL('image/png');
-    const filename = 'untitled.png';
+    // const data = canvasRef.current.toDataURL('image/png');
+    const filename = `Image ${id}.png`;
     const a = document.createElement('a');
-    a.href = data;
+    a.href = imageDataUrl;
+    // a.href = data;
+    a.target = '_blank';
     a.download = filename;
     document.body.appendChild(a);
     a.click();
+    document.body.removeChild(a);
   };
 
   useEffect(() => {
@@ -64,26 +67,25 @@ export const ImagePreview = ({
         overflow: 'hidden',
       }}
     >
-      {!isLoading && (
-        <Box
-          sx={{
-            display: 'flex',
-            flexDirection: 'row',
-            justifyContent: 'start',
-            marginBottom: '10px',
-            height: 'fit-content',
-          }}
+      <Box
+        sx={{
+          display: 'flex',
+          flexDirection: 'row',
+          justifyContent: 'start',
+          marginBottom: '10px',
+          height: 'fit-content',
+        }}
+      >
+        <Button
+          onClick={onDownloadClick}
+          color="primary"
+          variant="contained"
+          endIcon={<DownloadDoneOutlined />}
+          disabled={!imageDataUrl}
         >
-          <Button
-            onClick={onDownloadClick}
-            color="primary"
-            variant="contained"
-            endIcon={<DownloadDoneOutlined />}
-          >
-            Download Image
-          </Button>
-        </Box>
-      )}
+          Download Image
+        </Button>
+      </Box>
 
       {isLoading ? (
         <Loader />

@@ -6,16 +6,16 @@ import { PicsumImageDetails } from '../types';
 export type ImageTileContainerProps = {
   image: PicsumImageDetails;
   size: number;
+  onClick?: () => void;
 };
 export const ImageTileContainer = ({
   image,
   size,
+  onClick,
 }: ImageTileContainerProps) => {
   const imageTileUrl = getPicsumImageUrl(image.id, {
     width: size,
     height: size,
-    // blur: Math.random() < 0.1 ? 11 * Math.random() : 0,
-    // grayscale: Math.random() < 0.1,
   });
 
   return (
@@ -24,6 +24,8 @@ export const ImageTileContainer = ({
       author={image.author}
       width={size}
       height={size}
+      originalUrl={image.url}
+      onClick={onClick}
     />
   );
 };

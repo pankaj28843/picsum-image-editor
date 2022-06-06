@@ -1,12 +1,21 @@
 import { Box, Container, Grid, Pagination, Typography } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 import { Loader } from '@picsum-image-editor/components';
 
 import { ImageTileContainer } from '../components';
 import { usePicsumImagesPaginated } from '../hooks';
+import { updateImage, useAppDispatch } from '../store';
+import { PicsumImageDetails } from '../types';
 
 export const BrowseImages = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+  const onImageClick = (image: PicsumImageDetails) => {
+    dispatch(updateImage(image));
+    navigate('/editor');
+  };
+
   const {
     images,
     isLoading,
@@ -52,9 +61,11 @@ export const BrowseImages = () => {
           >
             {images.map((image) => (
               <Grid item key={image.id}>
-                <Link to={`/editor/${image.id}`}>
-                  <ImageTileContainer image={image} size={250} />
-                </Link>
+                <ImageTileContainer
+                  image={image}
+                  size={250}
+                  onClick={() => onImageClick(image)}
+                />
               </Grid>
             ))}
           </Grid>

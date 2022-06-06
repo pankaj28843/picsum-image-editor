@@ -1,6 +1,5 @@
-import { Box, Container } from '@mui/material';
-import { useState } from 'react';
-import { Navigate, useParams } from 'react-router-dom';
+import { Box } from '@mui/material';
+import { Navigate } from 'react-router-dom';
 
 import {
   BlurInput,
@@ -9,19 +8,37 @@ import {
 } from '@picsum-image-editor/components';
 
 import { ImagePreview } from '../components/ImagePreview';
+import { useDebounce } from '../hooks';
+import {
+  updateBlur,
+  updateGrayscale,
+  updateSize,
+  useAppDispatch,
+  useAppSelector,
+} from '../store';
 
 export const EditorPage = () => {
-  const [blur, setBlur] = useState(0);
-  const [grayscale, setGrayscale] = useState(false);
-  const [[width, height], setSize] = useState([1080, 600]);
-  const { imageId } = useParams();
+  const dispatch = useAppDispatch();
+  const { image, options } = useAppSelector((state) => state.editor);
+  const setBlur = useDebounce(
+    (value: number) => dispatch(updateBlur(value)),
+    200
+  );
+  const setGrayscale = useDebounce(
+    (value: boolean) => dispatch(updateGrayscale(value)),
+    200
+  );
+  const setSize = useDebounce(
+    (size: { width: number; height: number }) => dispatch(updateSize(size)),
+    200
+  );
 
-  if (!imageId) {
+  if (!image) {
     return <Navigate to="/" />;
   }
 
   return (
-    <Container
+    <Box
       sx={{
         overflow: 'hidden',
         display: 'flex',
@@ -35,14 +52,20 @@ export const EditorPage = () => {
           height: 'fit-content',
         }}
       >
-        <BlurInput min={0} max={10} initialValue={blur} onChange={setBlur} />
-        <SizeInput
-          initialValue={{ height, width }}
-          onChange={({ height, width }) => {
-            setSize([width, height]);
-          }}
+        <BlurInput
+          min={0}
+          max={10}
+          initialValue={options.blur}
+          onChange={setBlur}
         />
-        <GrayscaleInput initialValue={grayscale} onChange={setGrayscale} />
+        <SizeInput
+          initialValue={{ height: options.height, width: options.width }}
+          onChange={setSize}
+        />
+        <GrayscaleInput
+          initialValue={options.grayscale}
+          onChange={setGrayscale}
+        />
       </Box>
       <Box
         sx={{
@@ -50,8 +73,8 @@ export const EditorPage = () => {
           overflow: 'hidden',
         }}
       >
-        <ImagePreview {...{ id: imageId, width, height, blur, grayscale }} />
+        <ImagePreview {...{ id: image.id, ...options }} />
       </Box>
-    </Container>
+    </Box>
   );
 };

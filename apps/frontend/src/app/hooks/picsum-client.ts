@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 
 import { PicsumImageDetails, PicsumImageOptions } from '../types';
 import { delayedPromise } from '../utils';
@@ -103,32 +103,45 @@ export const usePicsumImagesPaginated = ({
 
 export const usePicsumImage = (id: string, options: PicsumImageOptions) => {
   const [isLoading, setLoading] = useState(false);
+  const [hasError, setHasError] = useState(false);
   const [image, setImage] = useState<HTMLImageElement | null>(null);
+  const [imageDataUrl, setImageDataUrl] = useState<string | null>(null);
+
+  const loadImage = useCallback(async (url: string) => {
+    setLoading(true);
+    setHasError(false);
+    setImageDataUrl(null);
+
+    try {
+      const imgData = await fetch(url).then((res) => res.blob());
+      const dataUrl = URL.createObjectURL(imgData);
+      setImageDataUrl(dataUrl);
+
+      const img = new Image();
+      img.src = dataUrl;
+      setImage(img);
+    } catch (err) {
+      console.error(err);
+      setHasError(true);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
+
   const url = useMemo(() => getPicsumImageUrl(id, options), [id, options]);
 
-  const loadImage = useCallback(async () => {
-    setLoading(true);
-    await delayedPromise(200).then(
-      () =>
-        new Promise<void>((resolve) => {
-          const img = new Image();
-          img.crossOrigin = 'anonymous';
-          img.onload = () => {
-            resolve();
-            setImage(img);
-            setLoading(false);
-          };
-          img.src = url;
-        })
-    );
-  }, [url]);
-
+  const debounceTimerId = useRef<number | null>(null);
   useEffect(() => {
-    loadImage();
-  }, [loadImage]);
+    if (debounceTimerId.current) {
+      clearTimeout(debounceTimerId.current);
+    }
+    debounceTimerId.current = window.setTimeout(() => loadImage(url), 200);
+  }, [loadImage, url]);
 
   return {
     isLoading,
     image,
+    imageDataUrl,
+    hasError,
   };
 };
