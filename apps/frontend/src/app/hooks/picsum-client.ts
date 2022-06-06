@@ -105,21 +105,18 @@ export const usePicsumImage = (
   id: string,
   options: PicsumImageOptions
 ): {
-  image: HTMLImageElement | null;
   imageBlobUrl: string | null;
   isLoading: boolean;
   hasError: boolean;
 } => {
   const isLoading = useRef(false);
   const hasError = useRef(false);
-  const [image, setImage] = useState<HTMLImageElement | null>(null);
   const [imageBlobUrl, setImageDataUrl] = useState<string | null>(null);
 
   const resetToLoading = useCallback(() => {
     isLoading.current = true;
     hasError.current = false;
     setImageDataUrl(null);
-    setImage(null);
   }, []);
 
   const loadImage = useCallback(
@@ -129,10 +126,6 @@ export const usePicsumImage = (
         const imgData = await fetch(url).then((res) => res.blob());
         const dataUrl = URL.createObjectURL(imgData);
         setImageDataUrl(dataUrl);
-
-        const img = new Image();
-        img.src = dataUrl;
-        setImage(img);
       } catch (err) {
         console.error(err);
         hasError.current = true;
@@ -158,7 +151,6 @@ export const usePicsumImage = (
   return {
     isLoading: isLoading.current,
     hasError: hasError.current,
-    image: image,
     imageBlobUrl: imageBlobUrl,
   };
 };
