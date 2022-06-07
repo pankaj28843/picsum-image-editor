@@ -1,11 +1,11 @@
+import CollectionsIcon from '@mui/icons-material/Collections';
 import { Box, Divider } from '@mui/material';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { Loader, SideNav } from '@picsum-image-editor/components';
+import { Loader, NavIcon, SideNav } from '@picsum-image-editor/components';
 
 import {
   BlurInputContainer,
-  BrowseImagesIcon,
   DownloadImage,
   GrayscaleInputContainer,
   ImagePreview,
@@ -31,7 +31,11 @@ export const EditorPage = () => {
   return (
     <Box sx={{ display: 'flex', height: '100%' }}>
       <SideNav>
-        <BrowseImagesIcon onClick={() => navigate('/')} />
+        <NavIcon
+          icon={<CollectionsIcon />}
+          tooltipText="Browse Images"
+          onClick={() => navigate('/')}
+        />
         <Divider />
         <BlurInputContainer />
         <SizeInputContainer />

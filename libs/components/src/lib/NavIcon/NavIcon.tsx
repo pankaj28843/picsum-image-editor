@@ -1,12 +1,13 @@
-import CollectionsIcon from '@mui/icons-material/Collections';
-import { Box, IconButton, Tooltip } from '@mui/material';
+import { Box, IconButton, IconButtonProps, Tooltip } from '@mui/material';
 
-export type BrowseImagesIconProps = {
-  onClick: () => void;
-};
-export const BrowseImagesIcon = ({ onClick }: BrowseImagesIconProps) => {
+export type NavIconProps = {
+  tooltipText: string;
+  icon: React.ReactNode;
+} & IconButtonProps;
+
+export const NavIcon = (props: NavIconProps) => {
   return (
-    <Tooltip title="Browse Images">
+    <Tooltip title={props.tooltipText}>
       <Box
         sx={{
           display: 'flex',
@@ -15,14 +16,15 @@ export const BrowseImagesIcon = ({ onClick }: BrowseImagesIconProps) => {
         }}
       >
         <IconButton
-          onClick={onClick}
+          {...props}
           sx={{
+            ...props.sx,
             color: 'primary.contrastText',
             width: 'max-content',
             height: 'max-content',
           }}
         >
-          <CollectionsIcon />
+          {props.icon}
         </IconButton>
       </Box>
     </Tooltip>

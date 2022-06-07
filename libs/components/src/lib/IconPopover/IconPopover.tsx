@@ -1,11 +1,7 @@
-import {
-  Box,
-  IconButton,
-  Popover,
-  PopoverOrigin,
-  Tooltip,
-} from '@mui/material';
+import { Popover, PopoverOrigin } from '@mui/material';
 import { useRef, useState } from 'react';
+
+import { NavIcon } from '../NavIcon';
 
 export type IconPopoverProps = {
   icon: React.ReactElement;
@@ -32,27 +28,11 @@ export const IconPopover = ({
 
   return (
     <>
-      <Tooltip title={tooltipText}>
-        <Box
-          sx={{
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}
-        >
-          <IconButton
-            ref={anchorEl}
-            onClick={() => setOpen(true)}
-            sx={{
-              color: 'primary.contrastText',
-              width: 'max-content',
-              height: 'max-content',
-            }}
-          >
-            {icon}
-          </IconButton>
-        </Box>
-      </Tooltip>
+      <NavIcon
+        icon={icon}
+        tooltipText={tooltipText}
+        onClick={() => setOpen(true)}
+      />
       <Popover
         open={open}
         onClose={() => setOpen(false)}

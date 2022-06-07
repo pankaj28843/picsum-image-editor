@@ -1,5 +1,6 @@
 import DownloadIcon from '@mui/icons-material/Download';
-import { Box, IconButton, Tooltip } from '@mui/material';
+
+import { NavIcon } from '@picsum-image-editor/components';
 
 export type DownloadImageProps = {
   imageBlobUrl: string | null;
@@ -16,7 +17,6 @@ export const DownloadImage = ({
 
     const a = document.createElement('a');
     a.href = imageBlobUrl;
-    // a.href = data;
     a.target = '_blank';
     a.download = filename;
     document.body.appendChild(a);
@@ -25,26 +25,11 @@ export const DownloadImage = ({
   };
 
   return (
-    <Tooltip title="Export Image as PNG">
-      <Box
-        sx={{
-          display: 'flex',
-          alignItems: 'center',
-          justifyContent: 'center',
-        }}
-      >
-        <IconButton
-          onClick={onDownloadClick}
-          disabled={!imageBlobUrl}
-          sx={{
-            color: 'primary.contrastText',
-            width: 'max-content',
-            height: 'max-content',
-          }}
-        >
-          <DownloadIcon />
-        </IconButton>
-      </Box>
-    </Tooltip>
+    <NavIcon
+      icon={<DownloadIcon />}
+      tooltipText="Export Image as PNG"
+      onClick={onDownloadClick}
+      disabled={!imageBlobUrl}
+    />
   );
 };

@@ -5,5 +5,3 @@ export * from './BlurInputContainer';
 export * from './SizeInputContainer';
 export * from './GrayscaleInputContainer';
 export * from './DownloadImage';
-export * from './BrowseImagesIcon';
-export * from './EditorIcon';

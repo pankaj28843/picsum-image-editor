@@ -1,10 +1,11 @@
+import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
 import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
-import { SideNav } from '@picsum-image-editor/components';
+import { NavIcon, SideNav } from '@picsum-image-editor/components';
 
-import { BrowseImages, EditorIcon } from '../components';
+import { BrowseImages } from '../components';
 import { useAppSelector } from '../store';
 
 const parsePage = (value: string | null): number => {
@@ -36,7 +37,14 @@ export const HomePage = () => {
   return (
     <Box sx={{ display: 'flex', height: '100%' }}>
       <SideNav>
-        <EditorIcon onClick={() => navigate('/editor')} disabled={!image} />
+        <NavIcon
+          onClick={() => navigate('/editor')}
+          disabled={!image}
+          tooltipText={
+            !image ? 'Please choose an image to edit' : 'Go to Image Editor'
+          }
+          icon={<EditIcon />}
+        />
       </SideNav>
       <Box
         component="main"
