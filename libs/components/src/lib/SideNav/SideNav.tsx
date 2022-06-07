@@ -2,10 +2,10 @@ import { Drawer } from '@mui/material';
 
 export type SideNavProps = {
   children: React.ReactNode;
+  drawerWidth?: number;
 };
 
-export const SideNav = ({ children }: SideNavProps) => {
-  const drawerWidth = 80;
+export const SideNav = ({ drawerWidth = 40, children }: SideNavProps) => {
   return (
     <Drawer
       anchor="left"
