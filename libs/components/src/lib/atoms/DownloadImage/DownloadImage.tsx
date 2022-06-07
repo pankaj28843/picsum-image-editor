@@ -1,6 +1,6 @@
 import DownloadIcon from '@mui/icons-material/Download';
 
-import { NavIcon } from '@picsum-image-editor/components';
+import { NavIcon } from '../NavIcon';
 
 export type DownloadImageProps = {
   imageBlobUrl: string | null;

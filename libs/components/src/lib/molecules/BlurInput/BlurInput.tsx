@@ -16,8 +16,10 @@ export const BlurInput = ({
 }: BlurInputProps) => {
   const [value, setValue] = useState(initialValue);
   const onInputChange = (newValue: number) => {
-    setValue(newValue);
-    onChange(newValue);
+    if (newValue !== value) {
+      setValue(newValue);
+      onChange(newValue);
+    }
   };
 
   return (
