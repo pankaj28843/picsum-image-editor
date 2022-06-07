@@ -8,7 +8,15 @@ import { usePicsumImagesPagination } from '../hooks';
 import { updateImage, useAppDispatch } from '../store';
 import { PicsumImageDetails } from '../types';
 
-export const BrowseImages = () => {
+export type BrowseImagesProps = {
+  initialPage?: number;
+  onPageChange?: (page: number) => void;
+};
+
+export const BrowseImages = ({
+  initialPage = 1,
+  onPageChange,
+}: BrowseImagesProps) => {
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const onImageClick = (image: PicsumImageDetails) => {
@@ -26,7 +34,17 @@ export const BrowseImages = () => {
     loadPage,
     hasError,
     errorMessage,
-  } = usePicsumImagesPagination();
+  } = usePicsumImagesPagination({ initialPage });
+
+  const onMuiPaginationChange = (
+    _event: React.ChangeEvent<unknown>,
+    page: number
+  ) => {
+    loadPage(page);
+    if (onPageChange) {
+      onPageChange(page);
+    }
+  };
 
   return (
     <Box
@@ -90,7 +108,7 @@ export const BrowseImages = () => {
           page={currentPage}
           showFirstButton={true}
           showLastButton={true}
-          onChange={(_event, page) => loadPage(page)}
+          onChange={onMuiPaginationChange}
           size="medium"
           sx={{
             padding: '10px',
