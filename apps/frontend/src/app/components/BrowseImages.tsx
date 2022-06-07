@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { Loader } from '@picsum-image-editor/components';
 
 import { ImageTileContainer } from '../components';
-import { usePicsumImagesPaginated } from '../hooks';
+import { usePicsumImagesPagination } from '../hooks';
 import { updateImage, useAppDispatch } from '../store';
 import { PicsumImageDetails } from '../types';
 
@@ -26,7 +26,7 @@ export const BrowseImages = () => {
     loadPage,
     hasError,
     errorMessage,
-  } = usePicsumImagesPaginated();
+  } = usePicsumImagesPagination();
 
   return (
     <Box

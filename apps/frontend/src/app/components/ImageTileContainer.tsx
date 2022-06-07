@@ -1,7 +1,7 @@
 import { ImageTile } from '@picsum-image-editor/components';
 
-import { getPicsumImageUrl } from '../hooks';
 import { PicsumImageDetails } from '../types';
+import { getPicsumImageUrl } from '../utils';
 
 export type ImageTileContainerProps = {
   image: PicsumImageDetails;
