@@ -2,13 +2,17 @@ import CollectionsIcon from '@mui/icons-material/Collections';
 import { Box, Divider } from '@mui/material';
 import { Navigate, useNavigate } from 'react-router-dom';
 
-import { Loader, NavIcon, SideNav } from '@picsum-image-editor/components';
+import {
+  DownloadImage,
+  ImagePreview,
+  Loader,
+  NavIcon,
+  SideNav,
+} from '@picsum-image-editor/components';
 
 import {
   BlurInputContainer,
-  DownloadImage,
   GrayscaleInputContainer,
-  ImagePreview,
   SizeInputContainer,
 } from '../components';
 import { usePicsumImage } from '../hooks';

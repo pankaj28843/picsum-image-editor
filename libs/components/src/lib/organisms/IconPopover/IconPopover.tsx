@@ -1,7 +1,7 @@
 import { Box, Popover, PopoverOrigin } from '@mui/material';
 import { useRef, useState } from 'react';
 
-import { NavIcon } from '../NavIcon';
+import { NavIcon } from '../../atoms/';
 
 export type IconPopoverProps = {
   icon: React.ReactElement;
