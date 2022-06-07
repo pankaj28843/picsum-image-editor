@@ -5,7 +5,7 @@ export type SideNavProps = {
   drawerWidth?: number;
 };
 
-export const SideNav = ({ drawerWidth = 40, children }: SideNavProps) => {
+export const SideNav = ({ drawerWidth = 60, children }: SideNavProps) => {
   return (
     <Drawer
       anchor="left"
@@ -16,7 +16,8 @@ export const SideNav = ({ drawerWidth = 40, children }: SideNavProps) => {
         '& .MuiDrawer-paper': {
           bgcolor: 'primary.main',
           color: 'primary.contrastText',
-          width: drawerWidth,
+          maxWidth: drawerWidth,
+          minWidth: 'fit-content',
           boxSizing: 'border-box',
         },
       }}
