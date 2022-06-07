@@ -5,7 +5,7 @@
   "homepage": "https://github.com/pankaj28843/picsum-image-editor",
   "scripts": {
     "nx": "nx",
-    "start": "NX_BASE_HREF=/ nx serve",
+    "start": "nx serve",
     "build": "nx build",
     "lint": "nx run-many --parallel 6 --verbose --all --target=lint",
     "test": "nx run-many --parallel 6 --verbose --all --target=test --runInBand",

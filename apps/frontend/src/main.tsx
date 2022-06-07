@@ -19,7 +19,7 @@ root.render(
     <Provider store={store}>
       <PersistGate loading={<Loader />} persistor={persistor}>
         <ThemeProvider theme={theme}>
-          <BrowserRouter basename={process.env['NX_BASE_HREF']}>
+          <BrowserRouter>
             <App />
           </BrowserRouter>
         </ThemeProvider>
