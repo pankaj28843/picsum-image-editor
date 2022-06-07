@@ -24,7 +24,12 @@ export const getPicsumImageUrl = (
     params.append('grayscale', 'true');
   }
 
-  const url = `https://picsum.photos/id/${id}/${width}/${height}?${params.toString()}`;
+  const queryParamsString = params.toString();
+  const url = `https://picsum.photos/id/${id}/${width}/${height}`;
 
-  return url;
+  if (queryParamsString) {
+    return `${url}?${queryParamsString}`;
+  } else {
+    return url;
+  }
 };

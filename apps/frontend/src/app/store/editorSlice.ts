@@ -13,7 +13,7 @@ export type EditorState = {
   };
 };
 
-const initialState: EditorState = {
+export const initialState: Readonly<EditorState> = {
   image: null,
   options: {
     width: 1000,
