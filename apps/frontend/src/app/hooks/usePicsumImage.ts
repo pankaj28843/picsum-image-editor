@@ -11,14 +11,14 @@ export const usePicsumImage = (
   isLoading: boolean;
   hasError: boolean;
 } => {
-  const isLoading = useRef(false);
-  const hasError = useRef(false);
-  const [imageBlobUrl, setImageDataUrl] = useState<string | null>(null);
+  const [isLoading, setLoading] = useState(false);
+  const [hasError, setError] = useState(false);
+  const [imageBlobUrl, setImageBlobUrl] = useState<string | null>(null);
 
   const resetToLoading = useCallback(() => {
-    isLoading.current = true;
-    hasError.current = false;
-    setImageDataUrl(null);
+    setLoading(true);
+    setError(false);
+    setImageBlobUrl(null);
   }, []);
 
   const loadImage = useCallback(
@@ -26,13 +26,13 @@ export const usePicsumImage = (
       resetToLoading();
       try {
         const imgData = await fetch(url).then((res) => res.blob());
-        const dataUrl = URL.createObjectURL(imgData);
-        setImageDataUrl(dataUrl);
+        const blobUrl = URL.createObjectURL(imgData);
+        setImageBlobUrl(blobUrl);
       } catch (err) {
         console.error(err);
-        hasError.current = true;
+        setError(true);
       } finally {
-        isLoading.current = false;
+        setLoading(false);
       }
     },
     [resetToLoading]
@@ -43,16 +43,15 @@ export const usePicsumImage = (
   const debounceTimerId = useRef<number | null>(null);
 
   useEffect(() => {
-    resetToLoading();
     if (debounceTimerId.current) {
       clearTimeout(debounceTimerId.current);
     }
     debounceTimerId.current = window.setTimeout(() => loadImage(url), 200);
-  }, [resetToLoading, loadImage, url]);
+  }, [loadImage, url]);
 
   return {
-    isLoading: isLoading.current,
-    hasError: hasError.current,
+    isLoading,
+    hasError,
     imageBlobUrl: imageBlobUrl,
   };
 };
