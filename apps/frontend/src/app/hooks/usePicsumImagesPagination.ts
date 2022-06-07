@@ -13,7 +13,15 @@ export const usePicsumImagesPagination = ({
   initialPage?: number;
   limit?: number;
   loadDelay?: number;
-} = {}) => {
+} = {}): {
+  images: PicsumImageDetails[];
+  isLoading: boolean;
+  hasError: boolean;
+  errorMessage: string | null;
+  totalPages: number;
+  currentPage: number;
+  loadPage: (page: number) => Promise<void>;
+} => {
   if (limit < 1 || limit > 100) {
     throw new Error('Limit must be between 1 and 100');
   }
@@ -26,11 +34,6 @@ export const usePicsumImagesPagination = ({
 
   const [currentPage, setCurrentPage] = useState(initialPage);
   const totalPages = useMemo(() => Math.ceil(TOTAL_COUNT / limit), [limit]);
-  const hasNext = useMemo(
-    () => currentPage < totalPages,
-    [currentPage, totalPages]
-  );
-  const hasPrevious = useMemo(() => currentPage > 1, [currentPage]);
 
   const loadPage = useCallback(
     async (page: number) => {
@@ -64,15 +67,6 @@ export const usePicsumImagesPagination = ({
     }
   }, [initialized, loadPage, initialPage]);
 
-  const loadNext = useCallback(
-    () => hasNext && loadPage(currentPage + 1),
-    [hasNext, loadPage, currentPage]
-  );
-  const loadPrevious = useCallback(
-    () => hasPrevious && loadPage(currentPage - 1),
-    [hasPrevious, loadPage, currentPage]
-  );
-
   return {
     images,
     isLoading,
@@ -80,10 +74,6 @@ export const usePicsumImagesPagination = ({
     errorMessage,
     totalPages,
     currentPage,
-    hasNext,
-    hasPrevious,
     loadPage,
-    loadNext,
-    loadPrevious,
   };
 };

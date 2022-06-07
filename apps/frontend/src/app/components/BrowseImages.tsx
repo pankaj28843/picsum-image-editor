@@ -29,8 +29,6 @@ export const BrowseImages = ({
     isLoading,
     totalPages,
     currentPage,
-    hasNext,
-    hasPrevious,
     loadPage,
     hasError,
     errorMessage,
@@ -103,8 +101,6 @@ export const BrowseImages = ({
           siblingCount={1}
           boundaryCount={1}
           count={totalPages}
-          hideNextButton={!hasNext}
-          hidePrevButton={!hasPrevious}
           page={currentPage}
           showFirstButton={true}
           showLastButton={true}

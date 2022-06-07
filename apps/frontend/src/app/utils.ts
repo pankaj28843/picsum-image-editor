@@ -6,7 +6,10 @@ export const delayedPromise = (ms: number): Promise<void> => {
   });
 };
 
-export const getPicsumImageUrl = (id: string, options: PicsumImageOptions) => {
+export const getPicsumImageUrl = (
+  id: string,
+  options: PicsumImageOptions
+): string => {
   const width = Math.floor(options.width);
   const height = Math.floor(options.height);
   const params = new URLSearchParams();
