@@ -1,4 +1,4 @@
-import { Popover, PopoverOrigin } from '@mui/material';
+import { Box, Popover, PopoverOrigin } from '@mui/material';
 import { useRef, useState } from 'react';
 
 import { NavIcon } from '../NavIcon';
@@ -28,11 +28,13 @@ export const IconPopover = ({
 
   return (
     <>
-      <NavIcon
-        icon={icon}
-        tooltipText={tooltipText}
-        onClick={() => setOpen(true)}
-      />
+      <Box ref={anchorEl}>
+        <NavIcon
+          icon={icon}
+          tooltipText={tooltipText}
+          onClick={() => setOpen(true)}
+        />
+      </Box>
       <Popover
         open={open}
         onClose={() => setOpen(false)}
