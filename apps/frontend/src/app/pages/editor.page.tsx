@@ -29,7 +29,7 @@ export const EditorPage = () => {
   }
 
   return (
-    <Box sx={{ display: 'flex', height: '100%' }}>
+    <Box sx={{ display: 'flex', height: '100%', overflow: 'hidden' }}>
       <SideNav>
         <NavIcon
           icon={<CollectionsIcon />}
@@ -50,6 +50,7 @@ export const EditorPage = () => {
         component="main"
         sx={{
           flexGrow: 1,
+          overflow: 'auto',
         }}
       >
         {isLoading || !imageBlobUrl ? (

@@ -25,7 +25,7 @@ export const ImagePreview = ({
         width={width}
         height={height}
         alt=""
-        style={{ padding: '10px', display: 'block' }}
+        style={{ display: 'block' }}
       />
     </Box>
   );
