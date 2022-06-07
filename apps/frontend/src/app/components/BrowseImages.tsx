@@ -9,12 +9,12 @@ import { updateImage, useAppDispatch } from '../store';
 import { PicsumImageDetails } from '../types';
 
 export type BrowseImagesProps = {
-  initialPage?: number;
+  currentPage?: number;
   onPageChange?: (page: number) => void;
 };
 
 export const BrowseImages = ({
-  initialPage = 1,
+  currentPage = 1,
   onPageChange,
 }: BrowseImagesProps) => {
   const dispatch = useAppDispatch();
@@ -24,15 +24,8 @@ export const BrowseImages = ({
     navigate('/editor');
   };
 
-  const {
-    images,
-    isLoading,
-    totalPages,
-    currentPage,
-    loadPage,
-    hasError,
-    errorMessage,
-  } = usePicsumImagesPagination({ initialPage });
+  const { images, isLoading, totalPages, loadPage, hasError, errorMessage } =
+    usePicsumImagesPagination({ currentPage });
 
   const onMuiPaginationChange = (
     _event: React.ChangeEvent<unknown>,

@@ -6,11 +6,11 @@ import { delayedPromise } from '../utils';
 const TOTAL_COUNT = 10 * 100; // Found it using pagination with limit 100 https://picsum.photos/v2/list?page=10&limit=100
 
 export const usePicsumImagesPagination = ({
-  initialPage = 1,
+  currentPage = 1,
   limit = 30,
   loadDelay = 200,
 }: {
-  initialPage?: number;
+  currentPage?: number;
   limit?: number;
   loadDelay?: number;
 } = {}): {
@@ -26,20 +26,18 @@ export const usePicsumImagesPagination = ({
     throw new Error('Limit must be between 1 and 100');
   }
 
-  const initialized = useRef(false);
+  const loadedPage = useRef<number | null>(null);
 
   const [images, setImages] = useState<PicsumImageDetails[]>([]);
   const [isLoading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const [currentPage, setCurrentPage] = useState(initialPage);
   const totalPages = useMemo(() => Math.ceil(TOTAL_COUNT / limit), [limit]);
 
   const loadPage = useCallback(
     async (page: number) => {
       setLoading(true);
       setErrorMessage(null);
-      setCurrentPage(page);
 
       try {
         const data = await delayedPromise(loadDelay).then(() =>
@@ -61,11 +59,11 @@ export const usePicsumImagesPagination = ({
   );
 
   useEffect(() => {
-    if (!initialized.current) {
-      loadPage(initialPage);
-      initialized.current = true;
+    if (loadedPage.current !== currentPage) {
+      loadPage(currentPage);
+      loadedPage.current = currentPage;
     }
-  }, [initialized, loadPage, initialPage]);
+  }, [loadedPage, loadPage, currentPage]);
 
   return {
     images,

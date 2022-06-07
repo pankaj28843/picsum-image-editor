@@ -1,6 +1,5 @@
 import EditIcon from '@mui/icons-material/Edit';
 import { Box } from '@mui/material';
-import { useEffect, useState } from 'react';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 import { NavIcon, SideNav } from '@picsum-image-editor/components';
@@ -22,17 +21,10 @@ export const HomePage = () => {
 
   const { image } = useAppSelector((state) => state.editor);
 
-  console.log(searchParams.get('page'));
-
-  const [page, setPage] = useState(parsePage(searchParams.get('page')));
-
-  useEffect(() => {
-    if (page.toString() !== searchParams.get('page')) {
-      const updatedSearchParams = new URLSearchParams(searchParams);
-      updatedSearchParams.set('page', page.toString());
-      setSearchParams(updatedSearchParams);
-    }
-  }, [page, setSearchParams, searchParams]);
+  const currentPage = parsePage(searchParams.get('page'));
+  const onPageChange = (page: number) => {
+    setSearchParams({ page: page.toString() });
+  };
 
   return (
     <Box sx={{ display: 'flex', height: '100%' }}>
@@ -52,7 +44,7 @@ export const HomePage = () => {
           flexGrow: 1,
         }}
       >
-        <BrowseImages initialPage={page} onPageChange={setPage} />
+        <BrowseImages currentPage={currentPage} onPageChange={onPageChange} />
       </Box>
     </Box>
   );
