@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useMemo } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
 import { PicsumImageOptions } from '../types';
@@ -19,7 +19,10 @@ export const usePicsumImageOptions = (): {
   updateImageOptions: (update: Partial<PicsumImageOptions>) => void;
 } => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const imageOptions = parseImageOptions(searchParams);
+  const imageOptions = useMemo(
+    () => parseImageOptions(searchParams),
+    [searchParams]
+  );
 
   const updateImageOptions = useCallback(
     (update: Partial<PicsumImageOptions>) => {
