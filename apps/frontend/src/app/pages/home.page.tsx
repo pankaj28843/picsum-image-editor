@@ -1,4 +1,3 @@
-import { Box } from '@mui/material';
 import { useSearchParams } from 'react-router-dom';
 
 import { BrowseImages } from '../components';
@@ -19,9 +18,5 @@ export const HomePage = () => {
     setSearchParams({ page: page.toString() });
   };
 
-  return (
-    <Box sx={{ display: 'flex', height: '100%' }}>
-      <BrowseImages currentPage={currentPage} onPageChange={onPageChange} />
-    </Box>
-  );
+  return <BrowseImages currentPage={currentPage} onPageChange={onPageChange} />;
 };
