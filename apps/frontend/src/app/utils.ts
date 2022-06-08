@@ -42,8 +42,12 @@ export const parseImageOptions = (
 ): PicsumImageOptions => {
   const width = parseInt(params.get('width') || '0', 10) || 500;
   const height = parseInt(params.get('height') || '0', 10) || 500;
-  const blur = parseInt(params.get('blur') || '0', 10) || undefined;
-  const grayscale = params.get('grayscale')?.toLocaleLowerCase() === 'true';
+  const blur = params.has('blur')
+    ? parseInt(params.get('blur') || '0', 10)
+    : undefined;
+  const grayscale = params.has('grayscale')
+    ? params.get('grayscale')?.toLocaleLowerCase() === 'true'
+    : undefined;
 
   return { width, height, blur, grayscale };
 };
