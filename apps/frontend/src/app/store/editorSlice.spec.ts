@@ -1,4 +1,4 @@
-import { PicsumImageDetails } from '../types';
+import { PicsumImageInfo } from '../types';
 import {
   EditorState,
   editorSlice,
@@ -12,7 +12,7 @@ import {
   updateWidth,
 } from './editorSlice';
 
-const TEST_IMAGE_1: PicsumImageDetails = {
+const TEST_IMAGE_1: PicsumImageInfo = {
   id: '91',
   author: 'Jennifer Trovato',
   width: 3504,
@@ -21,7 +21,7 @@ const TEST_IMAGE_1: PicsumImageDetails = {
   download_url: 'https://picsum.photos/id/91/3504/2336',
 };
 
-const TEST_IMAGE_2: PicsumImageDetails = {
+const TEST_IMAGE_2: PicsumImageInfo = {
   id: '912',
   author: 'Clem Onojeghuo',
   width: 5616,

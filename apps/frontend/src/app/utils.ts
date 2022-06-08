@@ -6,6 +6,9 @@ export const delayedPromise = (ms: number): Promise<void> => {
   });
 };
 
+export const getPicsumImageInfoUrl = (id: string) =>
+  `https://picsum.photos/id/${id}/info`;
+
 export const getPicsumImageUrl = (
   id: string,
   options: PicsumImageOptions
@@ -32,4 +35,15 @@ export const getPicsumImageUrl = (
   } else {
     return url;
   }
+};
+
+export const parseImageOptions = (
+  params: URLSearchParams
+): PicsumImageOptions => {
+  const width = parseInt(params.get('width') || '0', 10) || 500;
+  const height = parseInt(params.get('height') || '0', 10) || 500;
+  const blur = parseInt(params.get('blur') || '0', 10) || undefined;
+  const grayscale = params.get('grayscale')?.toLocaleLowerCase() === 'true';
+
+  return { width, height, blur, grayscale };
 };

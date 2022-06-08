@@ -1,4 +1,4 @@
-export type PicsumImageDetails = {
+export type PicsumImageInfo = {
   id: string;
   author: string;
   width: number;

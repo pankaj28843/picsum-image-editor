@@ -1,10 +1,10 @@
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 
-import { PicsumImageDetails } from '../types';
+import { PicsumImageInfo } from '../types';
 import { RootState } from './types';
 
 export type EditorState = {
-  image: PicsumImageDetails | null;
+  image: PicsumImageInfo | null;
   options: {
     width: number;
     height: number;
@@ -28,7 +28,7 @@ export const editorSlice = createSlice({
   initialState,
   reducers: {
     resetEditor: () => ({ ...initialState }),
-    updateImage: (state, action: PayloadAction<PicsumImageDetails>) => ({
+    updateImage: (state, action: PayloadAction<PicsumImageInfo>) => ({
       ...state,
       image: action.payload,
       options: { ...initialState.options },

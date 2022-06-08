@@ -1,10 +1,10 @@
 import { ImageTile } from '@picsum-image-editor/components';
 
-import { PicsumImageDetails } from '../types';
+import { PicsumImageInfo } from '../types';
 import { getPicsumImageUrl } from '../utils';
 
 export type ImageTileContainerProps = {
-  image: PicsumImageDetails;
+  image: PicsumImageInfo;
   size: number;
   onClick?: () => void;
 };

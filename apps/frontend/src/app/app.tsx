@@ -18,7 +18,7 @@ export default function App() {
       >
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/editor/" element={<EditorPage />} />
+          <Route path="/editor/:imageId" element={<EditorPage />} />
 
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>

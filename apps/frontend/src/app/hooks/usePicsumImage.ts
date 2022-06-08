@@ -25,9 +25,14 @@ export const usePicsumImage = (
     async (url: string) => {
       resetToLoading();
       try {
-        const imgData = await fetch(url).then((res) => res.blob());
-        const blobUrl = URL.createObjectURL(imgData);
-        setImageBlobUrl(blobUrl);
+        const response = await fetch(url);
+        if (response.ok) {
+          const blob = await response.blob();
+          const blobUrl = URL.createObjectURL(blob);
+          setImageBlobUrl(blobUrl);
+        } else {
+          throw new Error(`Error loading image: ${response.status}`);
+        }
       } catch (err) {
         console.error(err);
         setError(true);

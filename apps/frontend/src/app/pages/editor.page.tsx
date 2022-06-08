@@ -1,6 +1,6 @@
 import CollectionsIcon from '@mui/icons-material/Collections';
-import { Box, Divider } from '@mui/material';
-import { Navigate, useNavigate } from 'react-router-dom';
+import { Box, Divider, Typography } from '@mui/material';
+import { Navigate, useNavigate, useParams } from 'react-router-dom';
 
 import {
   DownloadImage,
@@ -15,20 +15,36 @@ import {
   GrayscaleInputContainer,
   SizeInputContainer,
 } from '../components';
-import { usePicsumImage } from '../hooks';
-import { useAppSelector } from '../store';
+import {
+  usePicsumImage,
+  usePicsumImageInfo,
+  usePicsumImageOptions,
+} from '../hooks';
 
 export const EditorPage = () => {
+  const { imageId } = useParams();
   const navigate = useNavigate();
-  const { image: imageDetails, options } = useAppSelector(
-    (state) => state.editor
-  );
-  const { isLoading, imageBlobUrl } = usePicsumImage(
-    imageDetails?.id || '1',
-    options
-  );
+  const { imageOptions } = usePicsumImageOptions();
 
-  if (!imageDetails) {
+  const {
+    imageInfo,
+    isLoading: isLoadingImageInfo,
+    errorMessage: imageInfoErrorMessage,
+  } = usePicsumImageInfo(imageId as string);
+  const {
+    isLoading: isLoadingImage,
+    imageBlobUrl,
+    hasError: errorOccuredDuringImageLoad,
+  } = usePicsumImage(imageId as string, imageOptions);
+
+  const isLoading = isLoadingImageInfo || isLoadingImage || !imageBlobUrl;
+  const errorMessage = imageInfoErrorMessage
+    ? imageInfoErrorMessage
+    : errorOccuredDuringImageLoad
+    ? 'Error loading image'
+    : null;
+
+  if (!imageId) {
     return <Navigate to="/" />;
   }
 
@@ -47,7 +63,7 @@ export const EditorPage = () => {
         <Divider />
         <DownloadImage
           imageBlobUrl={imageBlobUrl}
-          filename={`Photo by ${imageDetails.author}.png`}
+          filename={`Photo by ${imageInfo?.author}.png`}
         />
       </SideNav>
       <Box
@@ -57,13 +73,17 @@ export const EditorPage = () => {
           overflow: 'auto',
         }}
       >
-        {isLoading || !imageBlobUrl ? (
+        {errorMessage ? (
+          <Typography component="h4" color="error">
+            {errorMessage}
+          </Typography>
+        ) : isLoading ? (
           <Loader />
         ) : (
           <ImagePreview
             imageBlobUrl={imageBlobUrl}
-            width={options.width}
-            height={options.height}
+            width={imageOptions.width}
+            height={imageOptions.height}
           />
         )}
       </Box>

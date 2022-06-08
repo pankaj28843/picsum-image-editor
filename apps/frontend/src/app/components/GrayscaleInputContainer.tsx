@@ -3,13 +3,15 @@ import { Box } from '@mui/material';
 
 import { GrayscaleInput, IconPopover } from '@picsum-image-editor/components';
 
-import { updateGrayscale, useAppDispatch, useAppSelector } from '../store';
+import { usePicsumImageOptions } from '../hooks';
 
 export const GrayscaleInputContainer = () => {
-  const dispatch = useAppDispatch();
-  const { grayscale } = useAppSelector((state) => state.editor.options);
-
-  const setGrayscale = (value: boolean) => dispatch(updateGrayscale(value));
+  const {
+    imageOptions: { grayscale },
+    updateImageOptions,
+  } = usePicsumImageOptions();
+  const onGrayscaleChange = (value: boolean) =>
+    updateImageOptions({ grayscale: value });
 
   return (
     <IconPopover
@@ -23,7 +25,10 @@ export const GrayscaleInputContainer = () => {
             padding: '0.5rem',
           }}
         >
-          <GrayscaleInput initialValue={grayscale} onChange={setGrayscale} />
+          <GrayscaleInput
+            initialValue={!!grayscale}
+            onChange={onGrayscaleChange}
+          />
         </Box>
       }
     ></IconPopover>

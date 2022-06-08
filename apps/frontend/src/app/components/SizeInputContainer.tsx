@@ -3,14 +3,15 @@ import { Box } from '@mui/material';
 
 import { IconPopover, SizeInput } from '@picsum-image-editor/components';
 
-import { updateSize, useAppDispatch, useAppSelector } from '../store';
+import { usePicsumImageOptions } from '../hooks';
 
 export const SizeInputContainer = () => {
-  const dispatch = useAppDispatch();
-  const { height, width } = useAppSelector((state) => state.editor.options);
-
-  const setSize = (size: { width: number; height: number }) =>
-    dispatch(updateSize(size));
+  const {
+    imageOptions: { width, height },
+    updateImageOptions,
+  } = usePicsumImageOptions();
+  const onSizechange = ({ width, height }: { width: number; height: number }) =>
+    updateImageOptions({ width, height });
 
   return (
     <IconPopover
@@ -24,7 +25,7 @@ export const SizeInputContainer = () => {
             padding: '0.5rem',
           }}
         >
-          <SizeInput initialValue={{ width, height }} onChange={setSize} />
+          <SizeInput initialValue={{ width, height }} onChange={onSizechange} />
         </Box>
       }
     ></IconPopover>

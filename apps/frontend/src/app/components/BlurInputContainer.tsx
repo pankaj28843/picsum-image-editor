@@ -3,13 +3,14 @@ import { Box } from '@mui/material';
 
 import { BlurInput, IconPopover } from '@picsum-image-editor/components';
 
-import { updateBlur, useAppDispatch, useAppSelector } from '../store';
+import { usePicsumImageOptions } from '../hooks';
 
 export const BlurInputContainer = () => {
-  const dispatch = useAppDispatch();
-  const { blur } = useAppSelector((state) => state.editor.options);
-
-  const setBlur = (value: number) => dispatch(updateBlur(value));
+  const {
+    imageOptions: { blur },
+    updateImageOptions,
+  } = usePicsumImageOptions();
+  const onBlurChange = (value: number) => updateImageOptions({ blur: value });
 
   return (
     <IconPopover
@@ -23,7 +24,12 @@ export const BlurInputContainer = () => {
             padding: '0.5rem',
           }}
         >
-          <BlurInput min={0} max={10} initialValue={blur} onChange={setBlur} />
+          <BlurInput
+            min={0}
+            max={10}
+            initialValue={blur || 0}
+            onChange={onBlurChange}
+          />
         </Box>
       }
     ></IconPopover>
