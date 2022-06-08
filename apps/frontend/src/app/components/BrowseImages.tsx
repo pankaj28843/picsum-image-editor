@@ -5,7 +5,6 @@ import { Loader } from '@picsum-image-editor/components';
 
 import { ImageTileContainer } from '../components';
 import { usePicsumImagesPagination } from '../hooks';
-import { updateImage, useAppDispatch } from '../store';
 import { PicsumImageInfo } from '../types';
 
 export type BrowseImagesProps = {
@@ -17,10 +16,8 @@ export const BrowseImages = ({
   currentPage = 1,
   onPageChange,
 }: BrowseImagesProps) => {
-  const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const onImageClick = (image: PicsumImageInfo) => {
-    dispatch(updateImage(image));
     navigate(`/editor/${image.id}`);
   };
 

@@ -1,6 +1,6 @@
 # [Lorem Picsum](https://picsum.photos/) Image Editor
 
-A react app built using [React](https://reactjs.org/), [MUI](https://mui.com/), [React Router](https://reactrouter.com/), and [Redux](https://redux.js.org/). This project was generated using [Nx](https://nx.dev).
+A react app built using [React](https://reactjs.org/), [MUI](https://mui.com/), and [React Router](https://reactrouter.com/). This project was generated using [Nx](https://nx.dev).
 
 The app is live on https://picsum-image-editor.netlify.app/
 
